@@ -1,7 +1,266 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <meta charset="utf-8" />
+    <title>Snake Game</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+<p><center>Snake - David Guevara 2019</center></p>
+<hr>
+<br>
+<canvas id="canvas" width="500" height="500"></canvas>
+
+<script>
+  var Direction =
+  {
+    UP: {x: 0, y: -1},
+    LEFT: {x: -1, y: 0},
+    DOWN: {x: 0, y: 1},
+    RIGHT: {x: 1, y: 0}
+  }
+
+  class Snake
+  {
+    constructor(x, y, direction)
+    {
+      x = Math.floor(x);
+      y = Math.floor(y);
+      this.body = [];
+      this.body.push({x: x, y: y});
+      this.direction = direction;
+      this.full = false;
+    }
+
+    inside(point)
+    {
+      for(let i = 0; i < this.body.length; i++)
+      {
+        if(this.body[i].x === point.x && this.body[i].y === point.y)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    extend(width, height)
+    {
+      var next = {x: this.body[0].x + this.direction.x, y: this.body[0].y + this.direction.y};
+      if(next.x < 0 || next.y < 0 || next.x > width || next.y > height || this.inside(next))
+      {
+        return false;
+      }
+      this.body.unshift(next);
+      return true;
+    }
+
+    retract()
+    {
+      this.body.pop();
+    }
+
+    consume(food)
+    {
+      if(this.inside(food))
+      {
+        this.full = true;
+        return true;
+      }
+      return false;
+    }
+
+    step(width, height)
+    {
+      if(!this.extend(width, height))
+      {
+        return false;
+      }
+
+      if(this.full === true)
+      {
+        this.full = false;
+      }
+      else
+      {
+        this.retract();
+      }
+      return true;
+    }
+  }
+
+  var canvas = document.getElementById("canvas");
+  var ctx = canvas.getContext("2d");
+  document.addEventListener("keyup", keyHandler, false);
+  document.addEventListener("keydown", keyHandler, false);
+  document.addEventListener("keyleft", keyHandler, false);
+  document.addEventListener("keyright", keyHandler, false);
+
+  var cell = {l: 8, p: 2};
+  var size = {w: 30, h: 30};
+
+  var snake = new Snake(size.w/2, size.h/2 + 5, Direction.UP);
+  snake.extend();
+  snake.extend();
+
+  function keyHandler(e)
+  {
+    switch(e.keyCode)
+    {
+      case 38: if(snake.direction != Direction.DOWN) snake.direction = Direction.UP; break;
+      case 40: if(snake.direction != Direction.UP) snake.direction = Direction.DOWN; break;
+      case 37: if(snake.direction != Direction.RIGHT) snake.direction = Direction.LEFT; break;
+      case 39: if(snake.direction != Direction.LEFT) snake.direction = Direction.RIGHT; break;
+    }
+  }
+
+  function freeCells()
+  {
+    var result = [];
+    for(let i = 0; i < size.w; i++)
+    {
+      for(let j = 0; j < size.h; j++)
+      {
+        if(!snake.inside({x: i, y: j}))
+        {
+          result.push({x: i, y: j});
+        }
+      }
+    }
+    return result;
+  }
+
+  function generateFruit()
+  {
+    var array = freeCells();
+    if(array.length === 0)
+      return null;
+    return array[Math.floor((Math.random()*array.length))];
+  }
+
+  var fruit = generateFruit();
+
+  var lost = false;
+  var won = false;
+
+  function step()
+  {
+    if(!won || !lost)
+    {
+      if(snake.consume(fruit))
+      {
+        fruit = generateFruit();
+        if(fruit == null)
+        {
+          won = true;
+        }
+      }
+      if(!snake.step(size.w, size.h))
+      {
+        lost = true;
+      }
+    }
+  }
+
+  var center =
+  {
+    x: canvas.width / 2,
+    y: canvas.height / 2
+  };
+
+  var rect =
+  {
+    x: center.x - (cell.l * cell.p * size.w)/2,
+    y: center.y - (cell.l * cell.p * size.h)/2,
+    w: cell.l * cell.p * size.w,
+    h: cell.l * cell.p * size.h
+  };
+
+  function drawWin()
+  {
+    ctx.beginPath();
+    ctx.rect(rect.x, rect.y, rect.w, rect.h);
+    ctx.strokeStyle = "#000";
+    ctx.fillStyle = "#fff";
+    ctx.stroke();
+    ctx.font = "30px Georgia";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "green";
+    ctx.fillText("You won!",rect.x+(rect.w/2),rect.y+(rect.h/2));
+    ctx.closePath();
+  }
+
+  function drawLost()
+  {
+    ctx.beginPath();
+    ctx.rect(rect.x, rect.y, rect.w, rect.h);
+    ctx.strokeStyle = "#000";
+    ctx.fillStyle = "#fff";
+    ctx.stroke();
+    ctx.font = "30px Georgia";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "red";
+    ctx.fillText("You lost! :c",rect.x+(rect.w/2),rect.y+(rect.h/2));
+    ctx.closePath();
+  }
+
+  function drawFruit()
+  {
+    ctx.beginPath();
+    ctx.rect(rect.x + fruit.x * (cell.l + cell.p) - cell.p, rect.y + fruit.y * (cell.l + cell.p) - cell.p, cell.l, cell.l);
+    ctx.fillStyle = "red";
+    ctx.fill();
+    ctx.closePath();
+  }
+
+  function drawSnake()
+  {
+    ctx.beginPath();
+    for(let i = 0; i < snake.body.length; i++)
+    {
+      ctx.rect(rect.x + snake.body[i].x * (cell.l + cell.p) - cell.p, rect.y + snake.body[i].y * (cell.l + cell.p) - cell.p, cell.l, cell.l);
+      ctx.fillStyle = "blue";
+      ctx.fill();
+    }
+    ctx.closePath();
+  }
+
+  var interval = setInterval(draw, 100);
+
+  function draw()
+  {
+    ctx.clearRect(rect.x - 2, rect.y - 2, rect.w, rect.h);
+    ctx.beginPath();
+    ctx.rect(rect.x - 2, rect.y - 2, rect.w, rect.h);
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+    ctx.closePath();
+
+    if(won)
+    {
+      drawWin();
+      clearInterval(interval);
+    }
+    else if(lost)
+    {
+      drawLost();
+      clearInterval(interval);
+    }
+    else
+    {
+      drawFruit();
+      drawSnake();
+    }
+
+    step();
+  }
+</script>
+
 </body>
 </html>
