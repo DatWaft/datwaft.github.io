@@ -116,7 +116,8 @@
   function drawLost()
   {
     ctx.beginPath();
-    ctx.rect(rect.x, rect.y, rect.w, rect.h);
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell,
+      rect.h + total_cell);
     ctx.strokeStyle = "#000";
     ctx.fillStyle = "#fff";
     ctx.stroke();
@@ -130,7 +131,8 @@
   function drawWon()
   {
     ctx.beginPath();
-    ctx.rect(rect.x, rect.y, rect.w, rect.h);
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell,
+      rect.h + total_cell);
     ctx.strokeStyle = "#000";
     ctx.fillStyle = "#fff";
     ctx.stroke();
