@@ -22,10 +22,8 @@
 <script>
 // Context initialization.
   var canvas = document.getElementById("canvas");
-  canvas.width = window.screen.width;
-  canvas.height = window.screen.height;
-  canvas.style.width = window.screen.width;
-  canvas.style.height = window.screen.height;
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
   var ctx = canvas.getContext("2d");
 // Loop declaration.
   function init()
