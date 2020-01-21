@@ -13,24 +13,21 @@
         width:100%;
         height:100%;
       }
-    </style>
+ audios apis javascript   </style>
 </head>
 <body>
 
 <canvas id="canvas"></canvas>
-<audio id="music">
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
 
 <script>
 // Music.
-  const music = document.getElementById("music"); 
   var begin = false;
   function playMusic()
   {
     if(begin == false)
     {
-      music.play();
+      var music = new Audio('music.mp3');
+      music.play()
       music.volume = 0.3;
       begin = true;
       return false;
