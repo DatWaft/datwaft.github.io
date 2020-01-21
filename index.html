@@ -24,8 +24,18 @@
 
 <script>
 // Context initialization.
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
+  var ctx = setupCanvas(document.getElementById("canvas"));
+// Better dpi.
+  function setupCanvas(canvas)
+  {
+    var dpr = window.devicePixelRatio || 1;
+    var rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    var ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return ctx;
+  }
 // Loop declaration.
   function init()
   {
