@@ -29,7 +29,19 @@
 // Loop declaration.
   function init()
   {
+    if(reset)
+    {
+      height = 1;
+      blocks = [];
+      position = 0;
+      lost = false;
+      reset = false;
+      enter = false;
+    }
+    else
+    {
     step();
+    }
     draw();
     if(!lost && !(size.h == height))
       setTimeout(init, 1000/(height + 2));
@@ -39,9 +51,15 @@
   document.addEventListener("touchstart", keypressHandler, false);
 // Event Handler.
   var enter = false;
+  var reset = false;
   function keypressHandler(e)
   {
     enter = true;
+    if(lost || size.h == height)
+    {
+      reset = true;
+      init();
+    }
   }
 // Game variables.
   var maximum_height = 20;
@@ -141,7 +159,7 @@
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "red";
-    ctx.fillText("You lost! c:",rect.x - total_cell + ((rect.w +
+    ctx.fillText("You lost! :c",rect.x - total_cell + ((rect.w +
       total_cell)/2),rect.y - total_cell + ((rect.h + total_cell)/2));
     ctx.closePath();
   }
@@ -157,7 +175,7 @@
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "green";
-    ctx.fillText("You won! c:",rect.x - total_cell + ((rect.w +
+    ctx.fillText("You won! :D",rect.x - total_cell + ((rect.w +
       total_cell)/2),rect.y - total_cell + ((rect.h + total_cell)/2));
     ctx.closePath();
   }
