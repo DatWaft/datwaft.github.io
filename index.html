@@ -5,7 +5,14 @@
     <title>Towers Game</title>
     <style>
       * { padding: 0; margin: 0; }
-      canvas { background: #eee; display: block; margin: 0 auto; }
+      canvas {
+        background: #eee;
+        position:fixed;
+        left:0;
+        top:0;
+        width:100%;
+        height:100%;
+      }
     </style>
 </head>
 <body>
@@ -37,6 +44,7 @@
     enter = true;
   }
 // Game variables.
+  var maximum_height = 20;
   var width = 10;
   var currentSize = width/2;
   var blocks = [];
@@ -52,7 +60,8 @@
     x: canvas.width / 2,
     y: canvas.height / 2
   };
-  var cell = {l: 12, p: 3};
+  var total_cell = canvas.height / (maximum_height + 2);
+  var cell = {l: Math.round(total_cell * 8 / 10), p: Math.round(total_cell * 2 / 10)};
   var size = {w: width, h: 20};
   var rect =
   {
