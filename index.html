@@ -254,6 +254,11 @@
       rect.h + total_cell*2);
     ctx.fillStyle = "#fff";
     ctx.fill();
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell*2,
+      rect.h + total_cell*2);
+    ctx.strokeStyle = "#000";
+    ctx.fillStyle = "#fff";
+    ctx.stroke();
     ctx.closePath();
 
     ctx.beginPath();
