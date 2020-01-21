@@ -20,31 +20,12 @@
 <canvas id="canvas"></canvas>
 
 <script>
-// High DPI.
-  var PIXEL_RATIO = (function() 
-  {
-    var ctx = document.getElementById("canvas").getContext("2d"),
-      dpr = window.devicePixelRatio || 1,
-      bsr = ctx.webkitBackingStorePixelRatio ||
-            ctx.mozBackingStorePixelRatio ||
-            ctx.msBackingStorePixelRatio ||
-            ctx.oBackingStorePixelRatio ||
-            ctx.backingStorePixelRatio || 1;
-    return dpr / bsr;
-  })();
-  createHiDPICanvas = function(w, h, ratio) 
-  {
-    if (!ratio) { ratio = PIXEL_RATIO; }
-    var can = document.getElementById("canvas");
-    can.width = w * ratio;
-    can.height = h * ratio;
-    can.style.width = w + "px";
-    can.style.height = h + "px";
-    can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
-    return can;
-  }
 // Context initialization.
-  var canvas = createHiDPICanvas(window.screen.width, window.screen.height);
+  var canvas = document.getElementById("canvas");
+  canvas.width = window.screen.width;
+  canvas.height = window.screen.height;
+  canvas.style.width = window.screen.width;
+  canvas.style.height = window.screen.height;
   var ctx = canvas.getContext("2d");
 // Loop declaration.
   function init()
