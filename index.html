@@ -54,6 +54,7 @@
   var lost = false;
 
   var height = 1;
+  var actual_color = getRandomColor();
 // Display variables.
   var center = 
   {
@@ -86,8 +87,9 @@
       }
       else
       {
-        blocks.push({x: new_pos, s: overlap});
+        blocks.push({x: new_pos, s: overlap, color: actual_color});
         currentSize = overlap;
+        actual_color = getRandomColor();
       }
       enter = false;
       height += 1;
@@ -113,6 +115,20 @@
     }
   }
 // Drawing functions.
+  function getRandomColor() 
+  {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) 
+    {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    if (color == "FFFFFF")
+    {
+      color = "000000"
+    }
+    return color;
+  }
   function drawLost()
   {
     ctx.beginPath();
@@ -152,7 +168,7 @@
       ctx.beginPath();
       ctx.rect(rect.x + i * (cell.l + cell.p) - cell.p, rect.y + (size.h - height) * 
         (cell.l + cell.p) - cell.p, cell.l, cell.l);
-      ctx.fillStyle = "#000";
+      ctx.fillStyle = actual_color;
       ctx.fill();
       ctx.closePath();
     }
@@ -167,7 +183,7 @@
         ctx.rect(rect.x + i * (cell.l + cell.p) - cell.p, rect.y + (size.h - 
           height + (blocks.length - j)) * 
           (cell.l + cell.p) - cell.p, cell.l, cell.l);
-        ctx.fillStyle = "#000";
+        ctx.fillStyle = blocks[j].color;
         ctx.fill();
         ctx.closePath();
       }
