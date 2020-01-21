@@ -185,8 +185,9 @@
     for(let i = position; i < position + currentSize; i++)
     {
       ctx.beginPath();
-      ctx.rect(rect.x + i * (cell.l + cell.p) - cell.p, rect.y + (size.h - height) * 
-        (cell.l + cell.p) - cell.p, cell.l, cell.l);
+      ctx.rect(rect.x + total_cell/3 + i * (cell.l + cell.p) - cell.p, rect.y +
+        total_cell/3 + (size.h - height) * (cell.l + cell.p) - cell.p, cell.l,
+        cell.l);
       ctx.fillStyle = actual_color;
       ctx.fill();
       ctx.closePath();
@@ -199,8 +200,8 @@
       for(let i = blocks[j].x; i < blocks[j].x + blocks[j].s; i++)
       {
         ctx.beginPath();
-        ctx.rect(rect.x + i * (cell.l + cell.p) - cell.p, rect.y + (size.h - 
-          height + (blocks.length - j)) * 
+        ctx.rect(rect.x + total_cell/3 + i * (cell.l + cell.p) - cell.p, rect.y
+          + total_cell/3 + (size.h - height + (blocks.length - j)) * 
           (cell.l + cell.p) - cell.p, cell.l, cell.l);
         ctx.fillStyle = blocks[j].color;
         ctx.fill();
