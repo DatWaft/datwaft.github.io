@@ -18,8 +18,25 @@
 <body>
 
 <canvas id="canvas"></canvas>
+<audio id="music">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+// Music.
+  const music = document.getElementById("music"); 
+  var begin = false;
+  function playMusic()
+  {
+    if(begin == false)
+    {
+      music.play();
+      music.volume = 0.3;
+      begin = true;
+      return false;
+    }
+    return true;
+  }
 // Context initialization.
   var canvas = document.getElementById("canvas");
   canvas.width = canvas.clientWidth;
@@ -28,7 +45,7 @@
 // Loop declaration.
   function init()
   {
-    if(reset)
+    if(reset || !begin)
     {
       height = 1;
       blocks = [];
@@ -40,7 +57,7 @@
     }
     else
     {
-    step();
+      step();
     }
     draw();
     if(!lost && !(size.h == height))
@@ -54,6 +71,10 @@
   var reset = false;
   function keypressHandler(e)
   {
+    if(!playMusic())
+    {
+      return;
+    }
     enter = true;
     if(lost || size.h == height)
     {
@@ -146,6 +167,22 @@
       color = "000000"
     }
     return color;
+  }
+  function drawBegin()
+  {
+    ctx.beginPath();
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell*2,
+      rect.h + total_cell*2);
+    ctx.strokeStyle = "#000";
+    ctx.fillStyle = "#fff";
+    ctx.stroke();
+    ctx.font = "30px Georgia";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "red";
+    ctx.fillText("Press to begin",rect.x - total_cell + ((rect.w +
+      total_cell*2)/2),rect.y - total_cell + ((rect.h + total_cell*2)/2));
+    ctx.closePath();
   }
   function drawLost()
   {
@@ -240,8 +277,11 @@
     ctx.fillStyle = "blue";
     ctx.fillText("Towers Game", text.x + (text.w/2), text.y + (text.h/2));
     ctx.closePath();
-
-    if(lost || currentSize == 0)
+    if(!begin)
+    {
+      drawBegin();
+    }
+    else if(lost || currentSize == 0)
     {
       drawLost();
     }
