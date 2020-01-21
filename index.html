@@ -13,7 +13,7 @@
 <p><center>Towers - David Guevara 2019</center></p>
 <hr>
 <br>
-<canvas id="canvas" width="800" height="600"></canvas>
+<canvas id="canvas" width="300" height="400"></canvas>
 
 <script>
 // Context initialization.
@@ -24,7 +24,7 @@
   {
     step();
     draw();
-    if(!lost)
+    if(!lost && !(size.h == height))
       setTimeout(init, 1000/(height/2 + 2));
   };
 // Event Listener.
@@ -54,8 +54,8 @@
     x: canvas.width / 2,
     y: canvas.height / 2
   };
-  var cell = {l: 8, p: 2};
-  var size = {w: width, h: 30};
+  var cell = {l: 12, p: 3};
+  var size = {w: width, h: 20};
   var rect =
   {
     x: center.x - ((cell.l + cell.p) * size.w)/2,
@@ -120,6 +120,20 @@
     ctx.fillText("You lost! :c",rect.x+(rect.w/2),rect.y+(rect.h/2));
     ctx.closePath();
   }
+  function drawWon()
+  {
+    ctx.beginPath();
+    ctx.rect(rect.x, rect.y, rect.w, rect.h);
+    ctx.strokeStyle = "#000";
+    ctx.fillStyle = "#fff";
+    ctx.stroke();
+    ctx.font = "30px Georgia";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "green";
+    ctx.fillText("You won! c:",rect.x+(rect.w/2),rect.y+(rect.h/2));
+    ctx.closePath();
+  }
   function drawBlock()
   {
     for(let i = position; i < position + currentSize; i++)
@@ -161,6 +175,10 @@
     if(lost || currentSize == 0)
     {
       drawLost();
+    }
+    else if(height == size.h)
+    {
+      drawWon();
     }
     else
     {
