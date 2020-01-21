@@ -20,11 +20,12 @@
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 // Loop declaration.
-  var fps = 2;
+  var fps = 1;
   var loop = setInterval(function()
   {
     step();
     draw();
+    fps = height;
   }, 1000/fps);
 // Event Listener.
   document.addEventListener("keypress", keypressHandler, false);
