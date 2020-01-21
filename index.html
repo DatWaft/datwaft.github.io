@@ -151,8 +151,8 @@
   function drawLost()
   {
     ctx.beginPath();
-    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell,
-      rect.h + total_cell);
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell*2,
+      rect.h + total_cell*2);
     ctx.strokeStyle = "#000";
     ctx.fillStyle = "#fff";
     ctx.stroke();
@@ -161,14 +161,14 @@
     ctx.textBaseline = "middle";
     ctx.fillStyle = "red";
     ctx.fillText("You lost! :c",rect.x - total_cell + ((rect.w +
-      total_cell)/2),rect.y - total_cell + ((rect.h + total_cell)/2));
+      total_cell*2)/2),rect.y - total_cell + ((rect.h + total_cell*2)/2));
     ctx.closePath();
   }
   function drawWon()
   {
     ctx.beginPath();
-    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell,
-      rect.h + total_cell);
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell*2,
+      rect.h + total_cell*2);
     ctx.strokeStyle = "#000";
     ctx.fillStyle = "#fff";
     ctx.stroke();
@@ -177,7 +177,7 @@
     ctx.textBaseline = "middle";
     ctx.fillStyle = "green";
     ctx.fillText("You won! :D",rect.x - total_cell + ((rect.w +
-      total_cell)/2),rect.y - total_cell + ((rect.h + total_cell)/2));
+      total_cell*2)/2),rect.y - total_cell + ((rect.h + total_cell*2)/2));
     ctx.closePath();
   }
   function drawBlock()
@@ -213,8 +213,8 @@
     ctx.clearRect(0,0, canvas.width, canvas.height);
 
     ctx.beginPath();
-    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell,
-      rect.h + total_cell);
+    ctx.rect(rect.x - total_cell, rect.y - total_cell, rect.w + total_cell*2,
+      rect.h + total_cell*2);
     ctx.fillStyle = "#fff";
     ctx.fill();
     ctx.closePath();
@@ -225,12 +225,20 @@
     ctx.textBaseline = "middle";
     ctx.fillStyle = "green";
     var text = {
-      x: rect.x - Math.round(total_cell / 2),
-      y: rect.y + rect.h + 5,
-      w: rect.w,
+      x: rect.x - total_cell,
+      y: rect.y + rect.h + total_cell + 5,
+      w: rect.w + total_cell * 2,
       h: total_cell
     }
     ctx.fillText("Points: " + height, text.x + (text.w/2), text.y + (text.h/2));
+    var text = {
+      x: rect.x - total_cell,
+      y: rect.y - total_cell * 2 - 5,
+      w: rect.w + total_cell * 2,
+      h: total_cell
+    }
+    ctx.fillStyle = "blue";
+    ctx.fillText("Towers Game", text.x + (text.w/2), text.y + (text.h/2));
     ctx.closePath();
 
     if(lost || currentSize == 0)
