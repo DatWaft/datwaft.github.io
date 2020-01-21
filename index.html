@@ -182,6 +182,20 @@
     ctx.fill();
     ctx.closePath();
 
+    ctx.beginPath();
+    ctx.font = "20px Georgia";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "green";
+    var text = {
+      x: rect.x,
+      y: rect.y + rect.h + 5,
+      w: rect.w,
+      h: total_cell
+    }
+    ctx.fillText("Points: " + height, text.x + (text.w/2), text.y + (text.h/2));
+    ctx.closePath();
+
     if(lost || currentSize == 0)
     {
       drawLost();
