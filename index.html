@@ -20,13 +20,13 @@
   var canvas = document.getElementById("canvas");
   var ctx = canvas.getContext("2d");
 // Loop declaration.
-  var fps = 1;
-  var loop = setInterval(function()
+  function init()
   {
     step();
     draw();
-    fps = height;
-  }, 1000/fps);
+    if(!lost)
+      setTimeout(init, 1000/(height/2 + 2));
+  };
 // Event Listener.
   document.addEventListener("keypress", keypressHandler, false);
 // Event Handler.
@@ -68,19 +68,19 @@
   {
     if(enter)
     {
-      var x1 = (blocks.length > 0 ? blocks[blocks.length - 1].x : 0);
-      var x2 = (x1 + (blocks.length > 0 ? blocks[blocks.length - 1].x + 
-        blocks[blocks.length - 1].s : width));
-      var new_x1 = Math.max(x1, position);
-      var new_x2 = Math.min(x2, position + currentSize);
-      if(new_x1 > new_x2)
+      var x = (blocks.length > 0 ? blocks[blocks.length - 1].x : 0);
+      var s = (blocks.length > 0 ? blocks[blocks.length - 1].s : width);
+      var new_pos = Math.max(x, position);
+      var overlap = Math.max(0, Math.min(position + currentSize, x + s) -
+        Math.max(position, x));
+      if(overlap == 0)
       {
         lost = true;
       }
       else
       {
-        blocks.push({x: new_x1, s: new_x2 - new_x1});
-        currentSize = new_x2 - new_x1;
+        blocks.push({x: new_pos, s: overlap});
+        currentSize = overlap;
       }
       enter = false;
       height += 1;
@@ -161,7 +161,6 @@
     if(lost || currentSize == 0)
     {
       drawLost();
-      clearInterval(loop);
     }
     else
     {
@@ -169,6 +168,7 @@
       drawBuilding();
     }
   }
+  init();
 </script>
 
 </body>
