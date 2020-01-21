@@ -20,19 +20,32 @@
 <canvas id="canvas" width="300" height="400"></canvas>
 
 <script>
-// Context initialization.
-  var ctx = setupCanvas(document.getElementById("canvas"));
-// Better dpi.
-  function setupCanvas(canvas)
+// High DPI.
+  var PIXEL_RATIO = (function() 
   {
-    var dpr = window.devicePixelRatio || 1;
-    var rect = canvas.getBoundingClientRect();
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    var ctx = canvas.getContext('2d');
-    ctx.scale(dpr, dpr);
-    return ctx;
+    var ctx = document.getElementById("canvas").getContext("2d"),
+      dpr = window.devicePixelRatio || 1,
+      bsr = ctx.webkitBackingStorePixelRatio ||
+            ctx.mozBackingStorePixelRatio ||
+            ctx.msBackingStorePixelRatio ||
+            ctx.oBackingStorePixelRatio ||
+            ctx.backingStorePixelRatio || 1;
+    return dpr / bsr;
+  })();
+  createHiDPICanvas = function(w, h, ratio) 
+  {
+    if (!ratio) { ratio = PIXEL_RATIO; }
+    var can = document.getElementById("canvas");
+    can.width = w * ratio;
+    can.height = h * ratio;
+    can.style.width = w + "px";
+    can.style.height = h + "px";
+    can.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+    return can;
   }
+// Context initialization.
+  var canvas = createHiDPICanvas(window.screen.width, window.screen.height);
+  var ctx = canvas.getContext("2d");
 // Loop declaration.
   function init()
   {
