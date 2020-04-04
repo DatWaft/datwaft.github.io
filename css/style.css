@@ -83,6 +83,12 @@ section {
   background-position: center top; 
 }
 
+@media screen and (max-width: 481px) {
+  section {
+    font-size: 15px;
+  }
+}
+
 .box {
   /* Container properties */
   text-align: center;
@@ -112,16 +118,27 @@ footer {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-footer p {
+footer p, div {
   /* Miscelaneous properties */
   margin-left: 20px;
   margin-right: 20px;
 }
 
-footer button {
+footer div {
   /* Container properties */
   display: flex;
-  justify-content: space-between;
+}
+
+.divider{
+  width:5px;
+  height:auto;
+  display:inline-block;
+}
+
+footer button, form {
+  /* Container properties */
+  display: flex;
+  justify-content: center;
   align-items: center;
   /* Color properties */
   background-color: white;
@@ -130,4 +147,10 @@ footer button {
   width: 40px;
   cursor:pointer;
   border-radius: 6px;
+}
+
+footer form input {
+  /* Miscelaneous properties */
+  max-height: 70%;
+  max-width: 70%;
 }

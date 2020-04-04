@@ -3,6 +3,7 @@
   <head>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <title>Website's Index</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
   </head>
   <body>
     <header>
@@ -22,11 +23,18 @@
     </section>
     <footer>
       <p><b>Created by </b>David Guevara</p>
-      <p>
+      <div>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <input type="hidden" name="cmd" value="_donations" />
+        <input type="hidden" name="business" value="PBH7DJXGHUXF8" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <input type="image" src="images/paypal-icon.png" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+      </form>
+        <div class="divider" />
         <button onclick="window.location.href = 'https://github.com/datwaft'">
           <img src="images/github-icon.png">
         </button>
-      </p>
+      </div>
     </footer>
   </body>
 </html>
