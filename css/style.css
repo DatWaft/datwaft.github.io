@@ -93,7 +93,8 @@ section {
   border-style: solid;
   border-width: thick;
   border-radius: 6px;
-  padding-inline: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 footer {
@@ -112,7 +113,8 @@ footer {
 
 footer p {
   /* Miscelaneous properties */
-  padding-inline: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 footer button {
