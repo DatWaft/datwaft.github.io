@@ -80,7 +80,7 @@ section {
   /* Miscelaneous properties */
   background: url(../images/background.png);
   background-size: cover; 
-  background-position: center top; 
+  background-position: center bottom; 
 }
 
 .box {
