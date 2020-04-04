@@ -83,6 +83,8 @@ section {
 }
 
 .box {
+  /* Container properties */
+  text-align: center;
   /* Color properties */
   color: #b52c3c;
   background-color: #202c32;
