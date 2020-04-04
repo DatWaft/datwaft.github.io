@@ -151,6 +151,6 @@ footer button, form {
 
 footer form input {
   /* Miscelaneous properties */
-  max-height: 70%;
-  max-width: 70%;
+  max-height: 60%;
+  max-width: 60%;
 }
