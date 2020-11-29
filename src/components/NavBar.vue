@@ -28,7 +28,10 @@ export default {
 <style scoped>
 
 #navbar {
-  padding: 0 2rem;
+  padding: 1rem 2rem;
+
+  background-color: #283593;
+  color: #fafafa;
 
   display: flex;
   flex-direction: row;
@@ -43,7 +46,7 @@ export default {
 .title {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .item-container {

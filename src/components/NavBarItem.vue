@@ -7,10 +7,11 @@
     </template>
     <template v-else-if="item.type == 'dropdown'">
       <div class="tag clickable" @click="toggle()">
-          {{ item.tag }}
-          <font-awesome-icon :icon="icon" />
+        {{ item.tag }}
+        <font-awesome-icon icon="arrow-down" v-if="dropped" />
+        <font-awesome-icon icon="arrow-up" v-else />
       </div>
-      <div class="item-container">
+      <div class="item-container" v-if="dropped">
         <NavBarItem v-for="(child, i) in item.children" :item="child" :key="i" />
       </div>
     </template>
@@ -28,11 +29,6 @@ export default {
       dropped: false
     }
   },
-  computed: {
-    icon() {
-      return this.dropped ? "arrow-down" : "arrow-up"
-    }
-  },
   methods: {
     toggle() {
       this.dropped = !this.dropped
@@ -46,6 +42,14 @@ export default {
 .item,
 .dropdown {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown > .item-container {
+  position: absolute;
 }
 
 .clickable {
