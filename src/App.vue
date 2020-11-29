@@ -23,16 +23,16 @@ export default {
     return {
       title: "My Web Page",
       options: [
-        { type: "item", tag: "Who Am I", url: "#" },
-        { type: "item", tag: "Where Am I", url: "#" },
-        { type: "item", tag: "Which Am I", url: "#" },
+        { type: "item", tag: "Who Am I", url: "#who" },
+        { type: "item", tag: "Where Am I", url: "#where" },
+        { type: "item", tag: "Which Am I", url: "#which" },
         { type: "dropdown", tag: "Projects", children: [
-          { type: "item", tag: "Anaconda", url: "#" },
+          { type: "item", tag: "Anaconda", url: "#anaconda" },
           { type: "dropdown", tag: "Cute", children: [
-            { type: "item", tag: "Panda", url: "#" },
-            { type: "item", tag: "Rabbit", url: "#" },
+            { type: "item", tag: "Panda", url: "#panda" },
+            { type: "item", tag: "Rabbit", url: "#rabbit" },
           ] },
-          { type: "item", tag: "Thingy", url: "#" },
+          { type: "item", tag: "Thingy", url: "#thingy" },
         ] },
       ]
     }

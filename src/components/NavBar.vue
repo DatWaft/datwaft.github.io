@@ -28,10 +28,19 @@ export default {
 <style scoped>
 
 #navbar {
-  padding: 1rem 2rem;
+  --bg: #283593;
+  --fg: #fafafa;
+  --hover-bg: #001064;
 
-  background-color: #283593;
-  color: #fafafa;
+  --title-fz: 1.5rem;
+}
+
+#navbar {
+  padding: 0 1.5rem;
+  height: calc(var(--title-fz) + (1.5rem * 2));
+
+  background-color: var(--bg);
+  color: var(--fg);
 
   display: flex;
   flex-direction: row;
@@ -46,10 +55,12 @@ export default {
 .title {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: var(--title-fz);
 }
 
 .item-container {
+  height: 100%;
+
   flex-grow: 1;
   display: flex;
   flex-direction: row;

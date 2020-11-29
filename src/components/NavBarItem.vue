@@ -1,8 +1,8 @@
 <template>
   <div :class="item.type">
     <template v-if="item.type == 'item'">
-      <div class="tag">
-        <a :href="item.url">{{ item.tag }}</a>
+      <div class="tag" @click="go()">
+        {{ item.tag }}
       </div>
     </template>
     <template v-else-if="item.type == 'dropdown'">
@@ -32,7 +32,10 @@ export default {
   methods: {
     toggle() {
       this.dropped = !this.dropped
-    }
+    },
+    go() {
+      window.location = this.item.url
+    },
   }
 }
 </script>
@@ -42,6 +45,34 @@ export default {
 .item,
 .dropdown {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+  height: 100%;
+
+  background-color: var(--bg);
+  color: var(--fg);
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.tag {
+  flex-grow: 1;
+  
+  width: 100%;
+  height: 100%;
+  padding: 1rem 1rem;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  cursor: pointer;
+}
+
+.item:hover,
+.dropdown:hover {
+  background-color: var(--hover-bg);
 }
 
 .dropdown {
@@ -50,15 +81,12 @@ export default {
 
 .dropdown > .item-container {
   position: absolute;
+  top: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
 .clickable {
   cursor: pointer;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
 }
 
 </style>
